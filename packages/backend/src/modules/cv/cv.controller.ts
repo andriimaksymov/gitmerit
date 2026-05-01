@@ -14,8 +14,7 @@ export class CvController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadCv(@UploadedFile() file: any) {
-    // Use any for now to bypass strict Multer type issues if global definition is missing
+  async uploadCv(@UploadedFile() file?: Express.Multer.File) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }

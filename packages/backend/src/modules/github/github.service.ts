@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
+import { AxiosError } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import {
   GithubData,
@@ -61,15 +62,19 @@ export class GithubService {
         repositories: reposResponse.data,
         events: eventsResponse.data,
       };
-    } catch (error: any) {
-      if (error.response?.status === 404) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
         throw new NotFoundException(`GitHub user '${username}' not found`);
       }
       throw error;
     }
   }
 
-  async getRepoContent(username: string, repo: string, path: string = '') {
+  async getRepoContent(
+    username: string,
+    repo: string,
+    path: string = '',
+  ): Promise<unknown> {
     try {
       const headers = this.apiToken
         ? { Authorization: `token ${this.apiToken}` }
@@ -82,29 +87,32 @@ export class GithubService {
         ),
       );
       return response.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       // If file not found, return null instead of throwing
-      if (error.response?.status === 404) {
+      if (error instanceof AxiosError && error.response?.status === 404) {
         return null;
       }
       throw error;
     }
   }
 
-  async getRepoLanguages(username: string, repo: string) {
+  async getRepoLanguages(
+    username: string,
+    repo: string,
+  ): Promise<Record<string, number>> {
     try {
       const headers = this.apiToken
         ? { Authorization: `token ${this.apiToken}` }
         : {};
 
       const response = await firstValueFrom(
-        this.httpService.get(
+        this.httpService.get<Record<string, number>>(
           `${this.apiBaseUrl}/repos/${username}/${repo}/languages`,
           { headers },
         ),
       );
       return response.data;
-    } catch (error) {
+    } catch {
       return {};
     }
   }

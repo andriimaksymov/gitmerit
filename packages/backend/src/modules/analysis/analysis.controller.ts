@@ -12,7 +12,7 @@ export class AnalysisController {
   }
 
   @Get(':id')
-  async getAnalysis(@Param('id') id: string) {
+  getAnalysis(@Param('id') id: string) {
     // TODO: Implement when database is added
     return {
       message:

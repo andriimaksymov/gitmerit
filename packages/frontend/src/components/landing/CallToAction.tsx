@@ -1,6 +1,8 @@
 import { Heart, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+const repositoryUrl = 'https://github.com/andriimaksymov/portfolio-score';
+
 export const CallToAction = () => {
     const scrollToDemo = () => {
         document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' });
@@ -48,7 +50,7 @@ export const CallToAction = () => {
                         Launch Analysis
                     </Button>
                     <a
-                        href="https://github.com/andriimaksymov"
+                        href={repositoryUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-slate-800 border border-slate-700 text-white font-black text-xs uppercase tracking-[0.2em] hover:bg-slate-700 transition-all cursor-pointer shadow-xl hover:scale-105 active:scale-95"

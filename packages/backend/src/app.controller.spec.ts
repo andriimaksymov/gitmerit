@@ -15,8 +15,11 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return API status metadata', () => {
+      expect(appController.getHello()).toEqual({
+        message: 'Portfolio Analyzer API',
+        status: 'running',
+      });
     });
   });
 });

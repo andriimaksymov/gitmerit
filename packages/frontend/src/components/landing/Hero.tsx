@@ -43,6 +43,14 @@ export const Hero = ({
     }
   };
 
+  const handleFileDrop = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files?.[0];
+    if (file?.type === 'application/pdf' && onFileUpload) {
+      onFileUpload(file);
+    }
+  };
+
   return (
     <section id="demo" className="pt-36 pb-16">
       <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
@@ -92,6 +100,8 @@ export const Hero = ({
             ) : activeTab === 'cv' ? (
               <button
                 className="flex w-full flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 py-9 text-center transition hover:border-violet-300 hover:bg-violet-50/40"
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={handleFileDrop}
                 onClick={() => fileInputRef.current?.click()}
                 type="button"
               >

@@ -30,7 +30,7 @@ export class AnalysisService {
     );
 
     // Generate recommendations
-    const recommendations = this.generateRecommendations(scores, githubData);
+    const recommendations = this.generateRecommendations(scores);
 
     return {
       username,
@@ -57,10 +57,7 @@ export class AnalysisService {
     };
   }
 
-  private generateRecommendations(
-    scores: AiAnalysisScores,
-    _githubData: GithubData,
-  ): string[] {
+  private generateRecommendations(scores: AiAnalysisScores): string[] {
     const recommendations: string[] = [];
 
     if (scores.activity < 50) {

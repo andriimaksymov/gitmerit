@@ -62,12 +62,12 @@ const checklist = [
   'Lead with strongest achievements',
 ];
 
-const sampleResume = `ALEX SANDERS
-San Francisco, CA | alex@email.com | (555) 123-4567
+const sampleResume = `SAMPLE CANDIDATE
+City, Country | contact details available on request
 
 EXPERIENCE
 
-Senior Software Engineer | TechCorp | Jan 2020 - Present
+Senior Software Engineer | Example Company | Jan 2020 - Present
 
 • Responsible for developing new features for the web application
 • Worked on improving application performance

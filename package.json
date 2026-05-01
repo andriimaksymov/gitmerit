@@ -9,9 +9,15 @@
     "dev:backend": "pnpm --filter backend start:dev",
     "build": "pnpm --filter frontend build && pnpm --filter backend build",
     "lint": "pnpm --recursive lint",
+    "lint:check": "pnpm --filter frontend lint && pnpm --filter backend lint:check",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "type-check": "pnpm --recursive type-check"
+    "type-check": "pnpm --recursive type-check",
+    "test": "pnpm --recursive test",
+    "test:frontend": "pnpm --filter frontend test -- --run",
+    "test:backend": "pnpm --filter backend test",
+    "test:e2e": "pnpm --filter frontend test:e2e",
+    "check": "pnpm lint:check && pnpm type-check && pnpm test && pnpm build"
   },
   "keywords": [
     "portfolio",
@@ -34,7 +40,7 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "pnpm": ">=8.0.0"
   }
 }

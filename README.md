@@ -1,142 +1,196 @@
-# DevScore (Full-Stack Portfolio Intelligence)
+# DevScore
 
-**DevScore** is a premium full-stack platform that performs deep-tier analysis of technical careers. By integrating **GitHub**, **LinkedIn**, and **Resume (PDF)** data, it provides developers with a 360-degree technical audit, AI-driven strategic roadmaps, and actionable refactor recommendations.
+DevScore is a full-stack developer profile intelligence platform. It analyzes GitHub activity, LinkedIn positioning, and resume/CV PDFs, then turns those inputs into scores, summaries, missing keywords, and practical improvement roadmaps.
 
----
+The project is intentionally built as a portfolio-grade full-stack application: a React/Tailwind client, a NestJS API, typed contracts, AI orchestration, PDF parsing, automated tests, and deployment-ready package boundaries.
 
-## 🚀 Vision
-Bridge the gap between engineering history and professional impact. DevScore isn't just a scraper; it's a career intelligence engine that translates complex code patterns and professional experience into a quantifiable technical signature.
+## What It Does
 
-## ✨ Core Capabilities
+DevScore gives software engineers a single place to understand how their public career signal looks to hiring teams.
 
-### ⚡️ Multi-Source Analysis
-- **GitHub Audit**: Deep-semantic analysis of commit history, repository quality, and architecture patterns.
-- **LinkedIn Intelligence**: Extracts professional trajectory and market positioning from public profiles.
-- **CV Vector Scanning**: High-fidelity PDF parsing that identifies "Semantic Career Entities" and impact metrics.
+- GitHub analysis: activity, project quality, technology diversity, consistency, flagship repositories, strengths, weak spots, and repository-level recommendations.
+- LinkedIn analysis: profile completeness, headline quality, experience impact, skills relevance, personal branding, visibility keywords, and 7/30/60-day action plan.
+- Resume/CV analysis: PDF extraction, professional score, ATS compatibility, issue-by-issue rewrites, missing keywords, formatting feedback, and a resume text preview.
+- Multi-provider AI fallback: Gemini, OpenAI, and Groq are supported so analysis can continue if one provider is unavailable.
+- Light SaaS dashboard UI: modern white-theme reports with score rings, metric cards, roadmaps, sidebars, keyword chips, and responsive layouts.
 
-### 🧠 Triple-Fallback AI Engine
-- Utilizes a robust fallback architecture (**OpenAI GPT-4o** → **Google Gemini 1.5 Pro** → **Groq Llama 3**) to ensure 99%+ uptime and high-reasoning accuracy.
-- **Context-Aware Prompt Engineering**: Maps low-level activity patterns into high-level technical summaries.
-- **Strategic Improvements**: A 3-tier roadmap (Impact Roadmap → Technical Summary → Profile Improvements).
+## Repository Layout
 
-### 💎 Premium Interface
-- **Modern Dark Aesthetic**: A high-fidelity, glassmorphism UI built with **Tailwind CSS v4**.
-- **Performance First**: Zero-overhead design—migrated from MUI to pure Tailwind for maximum responsiveness and minimal bundle weight.
-- **Dynamic Previews**: Real-time analysis simulations and interactive dashboards.
+```text
+portfolio-score/
+├── packages/
+│   ├── frontend/          # React 19, Vite, Tailwind CSS v4, TanStack Query
+│   └── backend/           # NestJS 11 API, scoring, AI, GitHub, LinkedIn, CV modules
+├── docs/                  # Architecture, API, and maintenance guides
+├── .github/workflows/     # CI workflow for lint, type-check, tests, and build
+├── package.json           # Workspace scripts
+└── pnpm-workspace.yaml    # Monorepo package map
+```
 
-### 🧪 Comprehensive Testing Strategy
-- **Unit & Integration**: Vitest + React Testing Library for component reliability.
-- **End-to-End**: Playwright for full user flow verification across browsers.
+## Architecture At A Glance
 
----
+```text
+Browser UI
+  |
+  | Axios + TanStack Query
+  v
+NestJS API
+  |
+  |-- GitHub module: profile, repositories, activity, repository metadata
+  |-- LinkedIn module: profile ingestion and visibility analysis
+  |-- CV module: PDF upload and text extraction
+  |-- Scoring module: activity, quality, stack diversity, consistency
+  |-- AI module: structured prompts with provider fallback
+  v
+Structured report JSON
+  |
+  v
+React dashboards
+```
 
-## 🏗️ Architecture
+More detail is available in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-### Frontend (`packages/frontend`)
-- **React 19**: Utilizing the latest concurrent features and hook patterns.
-- **Tailwind CSS v4**: Modern utility-first styling with high-performance CSS-in-JS alternatives.
-- **TanStack Query (v5)**: Robust server state management and caching.
-- **Vitest & Playwright**: Modern testing infrastructure.
+## Tech Stack
 
-### Backend (`packages/backend`)
-- **NestJS**: Enterprise-grade modular Node.js framework.
-- **AI Orchestration**: Custom service layer for handling multi-LLM fallbacks and prompt engineering.
-- **PDF Vector Engine**: `pdf-parse` integration for extraction of structured data from CVs.
+### Frontend
 
----
+- React 19 and TypeScript
+- Vite 7
+- Tailwind CSS v4
+- React Router
+- TanStack Query
+- Axios
+- Lucide React
+- Vitest, React Testing Library, Playwright
 
-## 🛠️ Tech Stack & Dependencies
+### Backend
 
-### **Frontend**
-- **Core**: React 19, TypeScript, Vite 7
-- **Styling**: Tailwind CSS v4, Lucide React
-- **Testing**: Vitest, React Testing Library, Playwright
-- **Data**: TanStack Query, Axios
-- **Routing**: React Router v6
+- NestJS 11 and TypeScript
+- GitHub API integration
+- PDF parsing with `pdf-parse`
+- AI SDKs: Google GenAI, OpenAI, Groq
+- Validation with `class-validator` and `class-transformer`
+- Jest and Supertest
 
-### **Backend**
-- **Core**: NestJS 11, TypeScript
-- **AI**: OpenAI SDK, Google Generative AI, Groq SDK
-- **Parsing**: PDF-Parse, Cheerio
-- **Validation**: Class Validator, Class Transformer
-- **Testing**: Jest
+## Getting Started
 
----
+### Prerequisites
 
-## 🚀 Getting Started
+- Node.js 20 or newer
+- pnpm 8 or newer
+- At least one AI provider key for full AI reports
+- Optional GitHub token for higher GitHub API rate limits
 
-### 1. Prerequisites
-- **Node.js**: >= 20.x
-- **pnpm**: >= 8.x
-- **API Keys**: (Required for AI features) `OPENAI_API_KEY`, `GEMINI_API_KEY`, or `GROQ_API_KEY`.
+### Installation
 
-### 2. Installation
 ```bash
 git clone https://github.com/andriimaksymov/portfolio-score.git
 cd portfolio-score
 pnpm install
 ```
 
-### 3. Environment Configuration
-Create a `.env` file in the root:
+### Environment
+
+Create `.env` in the repository root:
+
 ```env
-# AI Keys
-OPENAI_API_KEY=your_key
-GEMINI_API_KEY=your_key
-GROQ_API_KEY=your_key
-
-# GitHub Integration
-GITHUB_API_TOKEN=your_token
+PORT=3001
+GITHUB_API_TOKEN=your_github_token
+GEMINI_API_KEY=your_gemini_key
+OPENAI_API_KEY=your_openai_key
+GROQ_API_KEY=your_groq_key
 ```
 
-### 4. Development
+Only one AI key is required, but multiple keys improve fallback reliability.
+
+### Run Locally
+
 ```bash
-# Start Frontend & Backend concurrently
 pnpm dev
-
-# Accessible at:
-# Frontend: http://localhost:5173
-# API:      http://localhost:3001/api
 ```
 
-### 5. Testing
-```bash
-# Unit Tests
-pnpm test
+Default local URLs:
 
-# E2E Tests
+- Frontend: `http://localhost:5173`
+- Backend API: `http://localhost:3001/api`
+
+## Main User Flows
+
+### GitHub Portfolio Audit
+
+1. Open the home page.
+2. Select `GitHub Profile`.
+3. Enter a GitHub username or profile URL.
+4. Run analysis.
+5. Review the score, metrics, flagship repositories, domain expertise, strengths, growth areas, and impact roadmap.
+
+### LinkedIn Profile Analysis
+
+1. Select `LinkedIn Profile`.
+2. Enter a LinkedIn profile URL.
+3. Run analysis.
+4. Review visibility metrics, headline rewrite, about-section rewrite, experience improvements, missing keywords, quick wins, and action plan.
+
+### Resume/CV Scanner
+
+1. Select `Resume / CV`.
+2. Upload or drag-and-drop a PDF.
+3. Run analysis.
+4. Review professional score, ATS compatibility, issue-by-issue rewrites, missing keywords, strength distribution, and top priority.
+
+## API Overview
+
+See [docs/API.md](docs/API.md) for request and response examples.
+
+Key endpoints:
+
+- `POST /api/analysis/analyze`
+- `POST /api/linkedin/analyze-url`
+- `POST /api/linkedin/analyze`
+- `POST /api/cv/upload`
+
+## Quality Checks
+
+```bash
+pnpm lint:check
+pnpm type-check
+pnpm test
+pnpm build
+```
+
+Run everything used by CI:
+
+```bash
+pnpm check
+```
+
+Run browser E2E tests:
+
+```bash
 pnpm test:e2e
 ```
 
----
+## Project Quality Signals Implemented
 
-## 🗺️ Roadmap Progress
+These items directly address the latest repository audit recommendations:
 
-### **Phase 1: Foundation (GitHub) ✅**
-- [x] GitHub API Semantic Scraper
-- [x] Tech Stack Diversity Scoring
-- [x] Flagship Repository Identification
+- Detailed root README with product flows, architecture, stack, setup, API links, and quality commands.
+- Dedicated architecture guide in `docs/ARCHITECTURE.md`.
+- Dedicated API guide in `docs/API.md`.
+- Maintenance guide in `docs/MAINTENANCE.md` to support consistent updates.
+- Contribution guide in `CONTRIBUTING.md`.
+- CI workflow in `.github/workflows/ci.yml`.
+- Actual resume drag-and-drop support in the UI.
+- Explicit backend documentation so the full-stack NestJS layer is visible from the repository entry point.
 
-### **Phase 2: Multi-Source Expansion ✅**
-- [x] **LinkedIn Integration**: Profile intelligence and trajectory analysis.
-- [x] **CV Scanning**: Support for PDF resume parsing and entity extraction.
-- [x] **Strategic UI**: Migration to Tailwind v4 for a premium, lightweight experience.
+## Roadmap
 
-### **Phase 3: Deep Reasoning ✅**
-- [x] Project-specific Refactor Recommendations
-- [x] Automated Strategic Improvement Roadmaps
-- [x] Multi-LLM Fallback Architecture
+- Persist historical analyses for signed-in users.
+- Add report export to PDF.
+- Add profile comparison and peer benchmark views.
+- Add richer repository health checks for README, tests, CI, licenses, and topics.
+- Add a database-backed analysis history module.
 
-### **Phase 4: Reliability & Polish ✅**
-- [x] **Comprehensive Testing**: Full coverage with Vitest and Playwright.
-- [x] **Content Refinement**: Technical language optimization across all dashboards.
+## License
 
----
-
-## 👤 Author
-**Andrii Maksymov**
-- [LinkedIn](https://www.linkedin.com/in/maksymov-andrii/)
-- [GitHub](https://github.com/andriimaksymov)
-
----
-**Note**: This project is built to demonstrate production-ready full-stack capabilities, focusing on AI orchestration, architectural scalability, and premium UI/UX design.
+MIT. See [LICENSE](LICENSE).

@@ -9,7 +9,7 @@ test.describe('Analysis Flow', () => {
         const runButton = page.getByRole('button', { name: 'Analyze Profile' });
         await expect(runButton).toBeDisabled();
 
-        await page.getByPlaceholder('e.g., octocat or https://github.com/octocat').fill('andriimaksymov');
+        await page.getByPlaceholder('e.g., octocat or https://github.com/octocat').fill('octocat');
         await expect(runButton).toBeEnabled();
     });
 

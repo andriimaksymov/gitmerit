@@ -1,91 +1,102 @@
-# DevScore Frontend - Premium Career Intelligence
+# DevScore Frontend
 
-The frontend for **DevScore**, a high-fidelity React application designed for deep-tier technical audit visualization. Migrated from MUI to **Tailwind CSS v4** for maximum performance and a custom, glassmorphism aesthetic.
+The DevScore frontend is a React application for launching developer profile analyses and rendering report dashboards for GitHub, LinkedIn, and resume/CV inputs.
 
-## 💎 Design Philosophy
-- **Performance First**: Zero-overhead styling using Tailwind CSS v4.
-- **Micro-Interactions**: Smooth transitions and hover states for a premium, application-like feel.
-- **Information Density**: Clean, modular dashboards that present complex AI insights without cognitive overload.
+It uses a white-theme SaaS interface with score rings, metric cards, roadmap panels, keyword chips, and responsive two-column report layouts.
 
-## 🛠 Tech Stack
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite 7](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **State Management**: [TanStack Query v5](https://tanstack.com/query/latest)
-- **Data Fetching**: Axios
-- **Testing**: [Vitest](https://vitest.dev/), [React Testing Library](https://testing-library.com/), [Playwright](https://playwright.dev/)
+## Responsibilities
 
-## 📦 Project Structure
-```
+- Collect analysis input from the user.
+- Support GitHub username/profile URL input.
+- Support LinkedIn profile URL input.
+- Support PDF upload by file picker and drag-and-drop.
+- Display loading, error, and success states for each analysis flow.
+- Render structured GitHub, LinkedIn, and CV report dashboards.
+- Keep report components resilient when AI fields are missing.
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite 7
+- Tailwind CSS v4
+- React Router
+- TanStack Query
+- Axios
+- Lucide React
+- Vitest and React Testing Library
+- Playwright
+
+## Project Structure
+
+```text
 src/
-├── api/                   # Global API client configuration
+├── api/                   # Axios client configuration
 ├── components/
-│   ├── landing/           # Home page sections (Hero, Navbar, Footer, etc.)
-│   ├── ui/                # Core UI primitives (Button, Card, etc.)
-│   └── dashboard/         # Shared dashboard preview components
+│   ├── landing/           # Home page, hero, navbar, feature sections
+│   ├── shared/            # ScoreRing, MetricCard, dashboard primitives
+│   └── ui/                # Lower-level UI primitives
 ├── features/
-│   └── analysis/          # Core Feature: Analysis Dashboards
-│       ├── api/           # Feature-specific hooks
-│       ├── components/    # GitHub, LinkedIn, and CV Dashboards
-│       ├── types/         # Domain-specific TypeScript interfaces
-│       └── hooks/         # Logic for analysis state management
-├── pages/                 # Full-page route components
-├── lib/                   # Utility functions
-└── e2e/                   # Playwright E2E tests
+│   └── analysis/
+│       ├── api/           # Analysis API functions
+│       ├── components/    # GitHub, LinkedIn, CV dashboards
+│       ├── hooks/         # React Query hooks
+│       └── types/         # Shared TypeScript report contracts
+├── pages/                 # Route-level screens
+├── lib/                   # Utility helpers
+└── e2e/                   # Playwright tests
 ```
 
-## 🚀 Getting Started
+## Routes
 
-### Installation
-```bash
-pnpm install
-```
+- `/`: Landing page and analysis launcher.
+- `/analysis/:username`: GitHub analysis dashboard.
+- `/linkedin?url=...`: LinkedIn analysis dashboard.
+- `/cv`: Resume/CV dashboard, reached after selecting a PDF from the landing page.
 
-### Development
+## Development
+
 ```bash
 pnpm dev
 ```
-Accessible at `http://localhost:5173`.
 
-### Testing
+Default URL:
+
+```text
+http://localhost:5173
+```
+
+The frontend expects the backend API to be available at the base URL configured in `src/api/client.ts`.
+
+## Quality Commands
+
 ```bash
-# Unit Tests
-pnpm test
-
-# End-to-End Tests
+pnpm type-check
+pnpm lint
+pnpm test -- --run
+pnpm build
 pnpm test:e2e
 ```
 
-### Production Build
-```bash
-pnpm build
-```
+## UI Implementation Notes
 
-## 🎨 Styling with Tailwind v4
-The project utilizes the modern Tailwind v4 `@theme` block in `index.css`. 
-- **Custom Accents**: Indigo, Purple, and Slate palettes.
-- **Shadows**: Custom "Premium" shadows for glass cards.
-- **Glassmorphism**: Native backdrop-blur utilities combined with border-slate-800/50.
+- Use `components/shared/ScoreRing.tsx` for circular report scores.
+- Use `components/shared/MetricCard.tsx` for report metrics.
+- Use `components/shared/DashboardPrimitives.tsx` for cards, pills, checklist rows, warning rows, and keyword tags.
+- Keep cards at restrained radii and avoid nesting card surfaces unnecessarily.
+- Prefer domain-specific report sections over generic marketing blocks.
+- Keep empty and missing-AI states readable; reports should not break when `aiInsights` is `null`.
 
-## ✨ Key Interactive Features
+## User Interaction Details
 
-### GitHub Analysis Dashboard
-- **Impact Roadmap**: Strategic improvements categorized by effort and impact.
-- **Technical Summary**: High-level executive summary of code quality.
+- The landing page disables analysis until an input or file is selected.
+- GitHub URLs are normalized to usernames before navigation.
+- Resume uploads support both click-to-upload and drag-and-drop.
+- LinkedIn and CV flows show light-theme loading and retry states.
 
-### LinkedIn Analysis Dashboard
-- **Growth Summary**: AI evaluation of profile trajectory and gaps.
-- **Network Visibility**: Insights into professional reach.
+## Future Improvements
 
-### CV / ATS Scan Dashboard
-- **Technical Summary**: Detailed breakdown of resume strength and missing keywords.
-
-## 🛣 Roadmap Progress
-- [x] Full migration from MUI to Tailwind v4 ✅
-- [x] Multi-source support (GitHub, LinkedIn, CV) ✅
-- [x] Premium dark-mode dashboard designs ✅
-- [x] Responsive tablet and mobile layouts ✅
-- [x] Comprehensive Test Coverage (Unit + E2E) ✅
-- [ ] Interactive Export (PDF) generation
-- [ ] Comparison mode (Benchmarking against peers)
+- Add PDF export implementation for reports.
+- Add persisted report history when a database is introduced.
+- Add comparison mode for multiple GitHub profiles.
+- Add visual regression snapshots for dashboard layouts.

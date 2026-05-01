@@ -1,4 +1,6 @@
-import { Github, Linkedin, Sparkles } from 'lucide-react';
+import { Github, Sparkles } from 'lucide-react';
+
+const repositoryUrl = 'https://github.com/andriimaksymov/portfolio-score';
 
 export const Footer = () => {
     return (
@@ -17,20 +19,12 @@ export const Footer = () => {
                         </p>
                         <div className="flex gap-4">
                             <a
-                                href="https://github.com/andriimaksymov"
+                                href={repositoryUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-800 transition-colors group"
                             >
                                 <Github size={20} className="text-slate-500 group-hover:text-white" />
-                            </a>
-                            <a
-                                href="https://www.linkedin.com/in/maksymov-andrii/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center cursor-pointer hover:bg-slate-800 transition-colors group"
-                            >
-                                <Linkedin size={20} className="text-slate-500 group-hover:text-blue-400" />
                             </a>
                         </div>
                     </div>
@@ -58,7 +52,7 @@ export const Footer = () => {
                             <p className="text-xs text-slate-600 leading-relaxed font-bold">
                                 Free forever. No signup required. <br />
                                 <a
-                                    href="https://github.com/andriimaksymov"
+                                    href={repositoryUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-white mt-1 block cursor-pointer hover:underline"
@@ -72,7 +66,7 @@ export const Footer = () => {
 
                 <div className="pt-10 border-t border-slate-900 flex justify-center items-center gap-6">
                     <p className="text-[10px] text-slate-700 font-mono uppercase tracking-widest">
-                        © 2026 DevScore | Portfolio Project by <a href="https://www.linkedin.com/in/maksymov-andrii/" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors cursor-pointer">Andrii Maksymov</a>
+                        © 2026 DevScore | Portfolio project
                     </p>
                 </div>
             </div>
