@@ -6,6 +6,45 @@ export interface AnalysisScore {
   consistency: number;
 }
 
+export interface AnalysisMetadata {
+  source: 'github' | 'linkedin' | 'cv';
+  provider: 'openai' | 'gemini' | 'groq' | 'deterministic';
+  model: string;
+  schemaVersion: string;
+  confidence: number;
+  warnings: string[];
+  generatedAt: string;
+}
+
+export interface EvidenceCard {
+  id: string;
+  source: 'github' | 'linkedin' | 'cv';
+  title: string;
+  summary: string;
+  repoName: string | null;
+  url: string | null;
+  technologies: string[];
+  signals: string[];
+  gaps: string[];
+  nextActions: string[];
+}
+
+export interface QualitySignal {
+  name: string;
+  status: 'strong' | 'ok' | 'weak' | 'unknown';
+  evidence: string;
+  score: number | null;
+}
+
+export interface NextAction {
+  title: string;
+  detail: string;
+  priority: 'high' | 'medium' | 'low';
+  metricTag: string;
+  effort: 'short' | 'medium' | 'long';
+  evidenceIds: string[];
+}
+
 export interface AiInsights {
   summary: string;
   careerPath: string;
@@ -24,6 +63,7 @@ export interface AiInsights {
     stars: number;
     technologies: string[];
     improvements: string[];
+    evidenceIds?: string[];
   }[];
   metricInsights: {
     activity: string;
@@ -34,7 +74,14 @@ export interface AiInsights {
   checklist: {
     item: string;
     metricTag: string;
+    evidenceIds?: string[];
   }[];
+  analysisMetadata?: AnalysisMetadata;
+  evidence?: EvidenceCard[];
+  qualitySignals?: QualitySignal[];
+  sourceLimitations?: string[];
+  nextActions?: NextAction[];
+  evidenceReferences?: string[];
 }
 
 export interface AnalysisResult {
@@ -55,6 +102,10 @@ export interface AnalysisResult {
     consistency: number;
   };
   aiInsights?: AiInsights;
+  evidence?: EvidenceCard[];
+  qualitySignals?: QualitySignal[];
+  sourceLimitations?: string[];
+  nextActions?: NextAction[];
   strengths: string[];
   weaknesses: string[];
   recommendations: string[];
@@ -75,8 +126,14 @@ export interface CvAnalysisResult {
     suggestion: string;
     quote: string;
     rewritten: string;
+    evidenceIds?: string[];
   }[];
   missingKeywords: string[];
+  analysisMetadata?: AnalysisMetadata;
+  evidence?: EvidenceCard[];
+  qualitySignals?: QualitySignal[];
+  sourceLimitations?: string[];
+  nextActions?: NextAction[];
 }
 
 export interface LinkedInProfile {
@@ -115,4 +172,9 @@ export interface LinkedInAnalysisResult {
     next30Days: string[];
     next60Days: string[];
   };
+  analysisMetadata?: AnalysisMetadata;
+  evidence?: EvidenceCard[];
+  qualitySignals?: QualitySignal[];
+  sourceLimitations?: string[];
+  nextActions?: NextAction[];
 }

@@ -16,7 +16,7 @@ export class LinkedinController {
   }
 
   @Post('fetch')
-  async fetch(@Body('url') url: string) {
+  fetch(@Body('url') url: string) {
     return this.linkedinService.fetchProfile(url);
   }
 }

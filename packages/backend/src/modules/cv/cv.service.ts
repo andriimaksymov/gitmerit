@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { AiService } from '../ai/ai.service';
+import { AiService, CvAnalysisOptions } from '../ai/ai.service';
 
 import pdf from 'pdf-parse';
 
@@ -9,7 +9,7 @@ export class CvService {
 
   constructor(private readonly aiService: AiService) {}
 
-  async processCv(buffer: Buffer) {
+  async processCv(buffer: Buffer, options: CvAnalysisOptions = {}) {
     this.logger.log('Processing CV PDF...');
 
     try {
@@ -19,7 +19,7 @@ export class CvService {
       this.logger.log(`Extracted ${text.length} characters from PDF.`);
 
       // Send to AI for analysis
-      const analysis = await this.aiService.generateCvAnalysis(text);
+      const analysis = await this.aiService.generateCvAnalysis(text, options);
 
       return {
         fullText: text,

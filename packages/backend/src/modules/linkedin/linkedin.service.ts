@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AiService } from '../ai/ai.service';
 
-import { IsString, IsArray, ValidateNested } from 'class-validator';
+import { IsString, IsArray, ValidateNested, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ExperienceDto {
@@ -13,6 +13,23 @@ export class ExperienceDto {
 
   @IsString()
   description: string;
+
+  @IsOptional()
+  @IsString()
+  startDate?: string;
+
+  @IsOptional()
+  @IsString()
+  endDate?: string;
+
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  achievements?: string[];
 }
 
 export class LinkedInProfileDto {
@@ -22,8 +39,21 @@ export class LinkedInProfileDto {
   @IsString()
   title: string;
 
+  @IsOptional()
+  @IsString()
+  headline?: string;
+
   @IsString()
   about: string;
+
+  @IsOptional()
+  @IsString()
+  profileText?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  targetRoles?: string[];
 
   @IsArray()
   @ValidateNested({ each: true })
@@ -34,6 +64,7 @@ export class LinkedInProfileDto {
   @IsString({ each: true })
   skills: string[];
 
+  @IsOptional()
   @IsString()
   avatarUrl?: string;
 }
@@ -51,11 +82,19 @@ export class LinkedinService {
     this.logger.log(`Starting full LinkedIn analysis for: ${url}`);
 
     // 1. Fetch/Scrape data
-    const profileData = await this.fetchProfile(url);
+    const profileData = this.fetchProfile(url);
 
-    // 2. Run AI Analysis
-    const aiAnalysis =
-      await this.aiService.generateLinkedinAnalysis(profileData);
+    // 2. URL-only LinkedIn analysis is intentionally limited. We do not
+    // scrape or invent public profile data from LinkedIn.
+    const aiAnalysis = await this.aiService.generateLinkedinAnalysis(
+      profileData,
+      {
+        limitedEvidence: true,
+        sourceLimitations: [
+          'LinkedIn URL analysis only extracts the public profile slug. Paste structured profile text into /linkedin/analyze for a high-confidence report.',
+        ],
+      },
+    );
 
     return {
       profile: profileData,
@@ -77,11 +116,8 @@ export class LinkedinService {
     };
   }
 
-  async fetchProfile(url: string) {
+  fetchProfile(url: string) {
     this.logger.log(`Fetching LinkedIn profile from ${url}`);
-
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const usernameMatch = url.match(/linkedin\.com\/in\/([^/]+)/);
     const username = usernameMatch ? usernameMatch[1] : 'User';
@@ -90,34 +126,19 @@ export class LinkedinService {
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
 
-    // Mocked data extracted from a "public profile"
+    // LinkedIn does not expose reliable public profile data for this API.
+    // Return only what can be derived from the URL, and let analysis metadata
+    // communicate the evidence limitation.
     return {
       fullName: formattedName,
-      title: 'Software Engineer at Innovative Solutions',
-      about: `Software Engineer with 4+ years of experience in full-stack development. I love building scalable web applications and exploring new technologies. Looking for my next big challenge in the fintech space.`,
-      skills: [
-        'JavaScript',
-        'TypeScript',
-        'React',
-        'Node.js',
-        'PostgreSQL',
-        'Docker',
-      ],
+      title: '',
+      headline: '',
+      about: '',
+      profileText: '',
+      targetRoles: [],
+      skills: [],
       avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(formattedName)}&background=0284c7&color=fff&size=256`,
-      experience: [
-        {
-          role: 'Junior Software Engineer',
-          company: 'Innovative Solutions',
-          description:
-            'Developed and maintained various web applications using React and Node.js. Improved application performance by 20%.',
-        },
-        {
-          role: 'Frontend Developer Intern',
-          company: 'WebCraft Agency',
-          description:
-            'Assisted in building responsive websites for clients. Learned the basics of modern web development and version control.',
-        },
-      ],
+      experience: [],
     };
   }
 }

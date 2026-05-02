@@ -99,9 +99,13 @@ GITHUB_API_TOKEN=your_github_token
 GEMINI_API_KEY=your_gemini_key
 OPENAI_API_KEY=your_openai_key
 GROQ_API_KEY=your_groq_key
+AI_PROVIDER_ORDER=openai,gemini,groq
+OPENAI_MODEL=gpt-5-mini
+GEMINI_MODEL=gemini-2.5-flash
+GROQ_MODEL=openai/gpt-oss-120b
 ```
 
-Only one AI key is required, but multiple keys improve fallback reliability.
+Only one AI key is required, but multiple keys improve fallback reliability. If no AI provider is configured, the backend returns deterministic evidence-based fallbacks.
 
 ### Run Locally
 

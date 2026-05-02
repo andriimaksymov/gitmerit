@@ -49,9 +49,13 @@ GITHUB_API_TOKEN=your_github_token
 GEMINI_API_KEY=your_gemini_key
 OPENAI_API_KEY=your_openai_key
 GROQ_API_KEY=your_groq_key
+AI_PROVIDER_ORDER=openai,gemini,groq
+OPENAI_MODEL=gpt-5-mini
+GEMINI_MODEL=gemini-2.5-flash
+GROQ_MODEL=openai/gpt-oss-120b
 ```
 
-At least one AI provider key is needed for AI-generated report sections. GitHub analysis can still return deterministic scoring without AI insights if providers are unavailable.
+At least one AI provider key is needed for AI-generated report sections. If providers are unavailable, the backend returns deterministic evidence-based fallbacks with `analysisMetadata`.
 
 ## Development
 

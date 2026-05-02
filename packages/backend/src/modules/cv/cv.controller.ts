@@ -4,6 +4,7 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  Body,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CvService } from './cv.service';
@@ -14,7 +15,12 @@ export class CvController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadCv(@UploadedFile() file?: Express.Multer.File) {
+  async uploadCv(
+    @UploadedFile() file?: Express.Multer.File,
+    @Body('targetRole') targetRole?: string,
+    @Body('seniority') seniority?: string,
+    @Body('jobDescription') jobDescription?: string,
+  ) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
@@ -22,6 +28,10 @@ export class CvController {
       throw new BadRequestException('Only PDF files are supported');
     }
 
-    return this.cvService.processCv(file.buffer);
+    return this.cvService.processCv(file.buffer, {
+      targetRole,
+      seniority,
+      jobDescription,
+    });
   }
 }
