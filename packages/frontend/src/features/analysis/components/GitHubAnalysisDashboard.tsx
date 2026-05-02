@@ -41,7 +41,7 @@ const fallbackProjects = [
     url: '',
     stars: 1203,
     technologies: ['Python', 'TensorFlow', 'Docker'],
-    improvements: ['Add CI/CD workflows', 'Create usage examples'],
+    improvements: ['Add automated test coverage', 'Create usage examples'],
   },
   {
     name: 'api-gateway',
@@ -57,7 +57,7 @@ const roadmapFallback = [
   'Add unit tests to top 3 repositories',
   'Write comprehensive README for flagship projects',
   'Contribute to 2-3 popular open-source projects',
-  'Add GitHub Actions workflows for CI/CD',
+  'Document release and deployment steps',
   'Create a technical blog or portfolio site',
 ];
 

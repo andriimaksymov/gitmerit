@@ -22,7 +22,6 @@ portfolio-score/
 │   ├── frontend/          # React 19, Vite, Tailwind CSS v4, TanStack Query
 │   └── backend/           # NestJS 11 API, scoring, AI, GitHub, LinkedIn, CV modules
 ├── docs/                  # Architecture, API, and maintenance guides
-├── .github/workflows/     # CI workflow for lint, type-check, tests, and build
 ├── package.json           # Workspace scripts
 └── pnpm-workspace.yaml    # Monorepo package map
 ```
@@ -183,7 +182,6 @@ These items directly address the latest repository audit recommendations:
 - Dedicated API guide in `docs/API.md`.
 - Maintenance guide in `docs/MAINTENANCE.md` to support consistent updates.
 - Contribution guide in `CONTRIBUTING.md`.
-- CI workflow in `.github/workflows/ci.yml`.
 - Actual resume drag-and-drop support in the UI.
 - Explicit backend documentation so the full-stack NestJS layer is visible from the repository entry point.
 

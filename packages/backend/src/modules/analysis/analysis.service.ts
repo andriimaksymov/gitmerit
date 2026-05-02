@@ -112,24 +112,6 @@ export class AnalysisService {
             )
           : 0,
       },
-      {
-        name: 'Automation Signals',
-        status: evidence.some((item) =>
-          item.signals.some((signal) => signal.includes('workflow')),
-        )
-          ? 'ok'
-          : 'weak',
-        evidence: `${evidence.filter((item) => item.signals.some((signal) => signal.includes('workflow'))).length}/${evidence.length} analyzed repositories expose GitHub workflow files`,
-        score: evidence.length
-          ? Math.round(
-              (evidence.filter((item) =>
-                item.signals.some((signal) => signal.includes('workflow')),
-              ).length /
-                evidence.length) *
-                100,
-            )
-          : 0,
-      },
     ];
 
     return { evidence, qualitySignals };
@@ -140,21 +122,14 @@ export class AnalysisService {
     repo: GithubRepo,
     index: number,
   ): Promise<EvidenceCard> {
-    const [languages, readme, packageJson, workflows, license] =
-      await Promise.all([
-        this.safeGetRepoLanguages(username, repo.name),
-        this.safeGetRepoText(username, repo.name, 'README.md'),
-        this.safeGetRepoText(username, repo.name, 'package.json'),
-        this.safeGetRepoContent(username, repo.name, '.github/workflows'),
-        this.safeGetRepoContent(username, repo.name, 'LICENSE'),
-      ]);
+    const [languages, readme, packageJson, license] = await Promise.all([
+      this.safeGetRepoLanguages(username, repo.name),
+      this.safeGetRepoText(username, repo.name, 'README.md'),
+      this.safeGetRepoText(username, repo.name, 'package.json'),
+      this.safeGetRepoContent(username, repo.name, 'LICENSE'),
+    ]);
 
     const packageSignals = this.packageSignals(packageJson);
-    const workflowCount = Array.isArray(workflows)
-      ? workflows.length
-      : workflows
-        ? 1
-        : 0;
     const technologies = this.presentStrings([
       repo.language,
       ...Object.keys(languages),
@@ -169,7 +144,6 @@ export class AnalysisService {
         : '',
       packageJson ? 'package.json detected' : '',
       ...packageSignals.signals,
-      workflowCount ? `${workflowCount} GitHub workflow file(s) detected` : '',
       license ? 'License file detected' : '',
       repo.stargazers_count ? `${repo.stargazers_count} public star(s)` : '',
       repo.forks_count ? `${repo.forks_count} fork(s)` : '',
@@ -181,7 +155,6 @@ export class AnalysisService {
       packageSignals.hasTests
         ? ''
         : 'Expose a test command or test documentation',
-      workflowCount ? '' : 'Add GitHub Actions or document CI/CD',
       license ? '' : 'Add a license if the project is meant to be reused',
     ].filter(Boolean);
 

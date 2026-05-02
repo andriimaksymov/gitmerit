@@ -5,7 +5,7 @@ DevScore is a pnpm workspace with two production packages:
 - `packages/frontend`: React application for input flows and report dashboards.
 - `packages/backend`: NestJS API for data ingestion, scoring, AI prompts, and file processing.
 
-The project keeps the frontend and backend independently deployable while sharing one repository, one lockfile, and one root-level quality workflow.
+The project keeps the frontend and backend independently deployable while sharing one repository, one lockfile, and root-level quality commands.
 
 ## System Flow
 

@@ -88,8 +88,6 @@ describe('AnalysisService evidence pipeline', () => {
             ).toString('base64'),
           });
         }
-        if (path === '.github/workflows')
-          return Promise.resolve([{ name: 'ci.yml' }]);
         if (path === 'LICENSE') {
           return Promise.resolve({
             encoding: 'base64',

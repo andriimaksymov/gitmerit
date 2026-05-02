@@ -7,7 +7,6 @@ export class ScoringService {
    * Advanced Scoring Logic
    * Now considers:
    * - Documentation depth (README size)
-   * - CI/CD presence (.github/workflows)
    * - Testing practices
    * - Licensing
    */
