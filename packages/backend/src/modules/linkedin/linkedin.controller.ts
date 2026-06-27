@@ -1,12 +1,14 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { LinkedinService, LinkedInProfileDto } from './linkedin.service';
+import { LinkedinService } from './linkedin.service';
+import { LinkedInProfileDto } from './dto/linkedin-profile.dto';
+import { AnalyzeUrlDto } from './dto/analyze-url.dto';
 
 @Controller('linkedin')
 export class LinkedinController {
   constructor(private readonly linkedinService: LinkedinService) {}
 
   @Post('analyze-url')
-  async analyzeUrl(@Body('url') url: string) {
+  async analyzeUrl(@Body() { url }: AnalyzeUrlDto) {
     return this.linkedinService.analyzeProfileFromUrl(url);
   }
 
@@ -16,7 +18,7 @@ export class LinkedinController {
   }
 
   @Post('fetch')
-  fetch(@Body('url') url: string) {
+  fetch(@Body() { url }: AnalyzeUrlDto) {
     return this.linkedinService.fetchProfile(url);
   }
 }

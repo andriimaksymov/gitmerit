@@ -1,49 +1,14 @@
-export interface AnalysisScore {
-  overall: number;
-  activity: number;
-  projectQuality: number;
-  techStackDiversity: number;
-  consistency: number;
-}
+// Cross-cutting primitives come from the shared package (single source of
+// truth with the backend). Re-exported so existing local imports still resolve.
+export type {
+  AnalysisScores,
+  AnalysisMetadata,
+  EvidenceCard,
+  QualitySignal,
+  NextAction,
+} from '@portfolio/shared';
 
-export interface AnalysisMetadata {
-  source: 'github' | 'linkedin' | 'cv';
-  provider: 'openai' | 'gemini' | 'groq' | 'deterministic';
-  model: string;
-  schemaVersion: string;
-  confidence: number;
-  warnings: string[];
-  generatedAt: string;
-}
-
-export interface EvidenceCard {
-  id: string;
-  source: 'github' | 'linkedin' | 'cv';
-  title: string;
-  summary: string;
-  repoName: string | null;
-  url: string | null;
-  technologies: string[];
-  signals: string[];
-  gaps: string[];
-  nextActions: string[];
-}
-
-export interface QualitySignal {
-  name: string;
-  status: 'strong' | 'ok' | 'weak' | 'unknown';
-  evidence: string;
-  score: number | null;
-}
-
-export interface NextAction {
-  title: string;
-  detail: string;
-  priority: 'high' | 'medium' | 'low';
-  metricTag: string;
-  effort: 'short' | 'medium' | 'long';
-  evidenceIds: string[];
-}
+import type { AnalysisMetadata, EvidenceCard, QualitySignal, NextAction } from '@portfolio/shared';
 
 export interface AiInsights {
   summary: string;

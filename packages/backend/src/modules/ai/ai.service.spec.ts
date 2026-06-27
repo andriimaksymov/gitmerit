@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { AiService } from './ai.service';
+import { AiProviderClient } from './providers/ai-provider.client';
 import {
   githubAiResponseSchema,
   linkedinAiResponseSchema,
@@ -12,6 +13,13 @@ import type {
 const configService = {
   get: jest.fn(() => undefined),
 } as unknown as ConfigService;
+
+/** Build a service plus the provider client it delegates to (for spying). */
+const buildService = () => {
+  const providerClient = new AiProviderClient(configService);
+  const service = new AiService(providerClient);
+  return { service, providerClient };
+};
 
 const validGithubOutput = {
   summary:
@@ -126,7 +134,7 @@ describe('AI schemas', () => {
 
 describe('AiService', () => {
   it('uses deterministic GitHub fallback when no provider is configured', async () => {
-    const service = new AiService(configService);
+    const { service } = buildService();
 
     const result = await service.generateAiAnalysis(
       githubProfile,
@@ -161,18 +169,16 @@ describe('AiService', () => {
   });
 
   it('repairs schema-invalid provider output once', async () => {
-    const service = new AiService(configService);
-    const harness = service as unknown as {
+    const { providerClient } = buildService();
+    const harness = providerClient as unknown as {
       runStructuredTask: <T>(task: unknown) => Promise<T>;
-      getAvailableProviders: jest.Mock;
-      callProvider: jest.Mock;
     };
 
     jest
-      .spyOn(service as any, 'getAvailableProviders')
+      .spyOn(providerClient as any, 'getAvailableProviders')
       .mockReturnValue([{ name: 'openai', model: 'test-model' }]);
     jest
-      .spyOn(service as any, 'callProvider')
+      .spyOn(providerClient as any, 'callProvider')
       .mockResolvedValueOnce({ summary: 'invalid' })
       .mockResolvedValueOnce(validGithubOutput);
 
@@ -196,7 +202,7 @@ describe('AiService', () => {
   });
 
   it('sanitizes unsupported LinkedIn metrics and invented companies', async () => {
-    const service = new AiService(configService);
+    const { service, providerClient } = buildService();
     const providerOutput = {
       summary: {
         text: 'Delivered 50% growth at supplied company.',
@@ -244,10 +250,10 @@ describe('AiService', () => {
     };
 
     jest
-      .spyOn(service as any, 'getAvailableProviders')
+      .spyOn(providerClient as any, 'getAvailableProviders')
       .mockReturnValue([{ name: 'openai', model: 'test-model' }]);
     jest
-      .spyOn(service as any, 'callProvider')
+      .spyOn(providerClient as any, 'callProvider')
       .mockResolvedValue(providerOutput);
 
     const result = await service.generateLinkedinAnalysis({
@@ -273,7 +279,7 @@ describe('AiService', () => {
   });
 
   it('returns low-confidence CV fallback for unreadable extracted text', async () => {
-    const service = new AiService(configService);
+    const { service } = buildService();
 
     const result = await service.generateCvAnalysis('scan');
 
@@ -283,7 +289,7 @@ describe('AiService', () => {
   });
 
   it('keeps deterministic CV improvement quotes exact and uses job description keywords', async () => {
-    const service = new AiService(configService);
+    const { service } = buildService();
     const text = `
 SUMMARY
 Software engineer building web applications with React and Node.js.

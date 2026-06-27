@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Navbar } from '@/components/landing/Navbar';
+import { Navbar } from '@/components/shared/Navbar';
 import { Hero } from '@/components/landing/Hero';
 import { DashboardPreview } from '@/components/landing/DashboardPreview';
 import { HowItWorks } from '@/components/landing/HowItWorks';

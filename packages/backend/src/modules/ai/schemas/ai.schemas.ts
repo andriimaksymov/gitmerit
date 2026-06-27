@@ -1,4 +1,5 @@
 import { z } from 'zod/v3';
+import type * as Shared from '@portfolio/shared';
 
 export const analysisSourceSchema = z.enum(['github', 'linkedin', 'cv']);
 export const providerNameSchema = z.enum([
@@ -160,14 +161,34 @@ export const cvAiResponseSchema = z.object({
   nextActions: z.array(nextActionSchema),
 });
 
-export type AnalysisSource = z.infer<typeof analysisSourceSchema>;
-export type ProviderName = z.infer<typeof providerNameSchema>;
-export type AnalysisMetadata = z.infer<typeof analysisMetadataSchema>;
-export type QualitySignal = z.infer<typeof qualitySignalSchema>;
-export type NextAction = z.infer<typeof nextActionSchema>;
-export type EvidenceCard = z.infer<typeof evidenceCardSchema>;
+// Cross-cutting primitives now live in the shared package (single source of
+// truth for frontend + backend). Re-exported here so existing imports from
+// this module keep working.
+export type {
+  AnalysisSource,
+  ProviderName,
+  AnalysisMetadata,
+  QualitySignal,
+  NextAction,
+  EvidenceCard,
+} from '@portfolio/shared';
+
+// Response shapes remain backend-owned (inferred from the Zod schemas).
 export type GithubAiResponse = z.infer<typeof githubAiResponseSchema>;
 export type LinkedinAiResponse = z.infer<typeof linkedinAiResponseSchema>;
 export type LinkedinDimension = z.infer<typeof linkedinDimensionSchema>;
 export type CvAiResponse = z.infer<typeof cvAiResponseSchema>;
 export type CvImprovementCategory = z.infer<typeof cvImprovementCategorySchema>;
+
+// Compile-time guard: the Zod schemas above must stay structurally identical to
+// the shared TypeScript contracts. If a schema drifts, assigning `true` to a
+// `never` tuple slot below stops compiling — a deliberate tripwire.
+type Equals<A, B> = [A] extends [B] ? ([B] extends [A] ? true : never) : never;
+export const SCHEMA_CONFORMS_WITH_SHARED: [
+  Equals<z.infer<typeof analysisSourceSchema>, Shared.AnalysisSource>,
+  Equals<z.infer<typeof providerNameSchema>, Shared.ProviderName>,
+  Equals<z.infer<typeof analysisMetadataSchema>, Shared.AnalysisMetadata>,
+  Equals<z.infer<typeof qualitySignalSchema>, Shared.QualitySignal>,
+  Equals<z.infer<typeof nextActionSchema>, Shared.NextAction>,
+  Equals<z.infer<typeof evidenceCardSchema>, Shared.EvidenceCard>,
+] = [true, true, true, true, true, true];

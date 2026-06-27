@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AnalysisService } from './analysis.service';
 import { AnalyzePortfolioDto } from './dto/analyze-portfolio.dto';
 
@@ -9,15 +9,5 @@ export class AnalysisController {
   @Post('analyze')
   async analyzePortfolio(@Body() analyzeDto: AnalyzePortfolioDto) {
     return this.analysisService.analyzePortfolio(analyzeDto.username);
-  }
-
-  @Get(':id')
-  getAnalysis(@Param('id') id: string) {
-    // TODO: Implement when database is added
-    return {
-      message:
-        'Analysis retrieval will be implemented with database integration',
-      id,
-    };
   }
 }

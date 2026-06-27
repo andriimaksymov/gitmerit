@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AiService } from '../ai/ai.service';
 import { LinkedinService } from './linkedin.service';
+import { LinkedinScraper } from './linkedin.scraper';
 
 describe('LinkedinService', () => {
   let service: LinkedinService;
@@ -33,6 +34,7 @@ describe('LinkedinService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         LinkedinService,
+        LinkedinScraper,
         {
           provide: AiService,
           useValue: aiService,
