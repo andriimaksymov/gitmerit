@@ -29,6 +29,13 @@ const HomePage = () => {
   const handleFileUpload = (file: File) => {
     setSelectedFile(file);
     setInputValue(file.name); // Set input value to file name for display
+    // Resume / LinkedIn analysis kicks off as soon as a file is chosen — the
+    // destination page uploads and analyzes on mount, so no extra click needed.
+    if (activeTab === 'linkedin') {
+      navigate('/linkedin', { state: { file } });
+    } else if (activeTab === 'cv') {
+      navigate('/cv', { state: { file } });
+    }
   };
 
   return (
