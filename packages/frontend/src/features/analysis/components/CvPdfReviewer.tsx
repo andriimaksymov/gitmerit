@@ -16,7 +16,7 @@ import {
   setActiveHighlight,
   type HighlightImprovement,
 } from '../lib/highlightQuotes';
-import { buildUpdatedResume } from '../lib/buildUpdatedResume';
+import { buildUpdatedResume, extendQuoteTail } from '../lib/buildUpdatedResume';
 import type { DownloadInfo } from './GeneratedResumeViewer';
 
 // @react-pdf/renderer is heavy (~1.5 MB) — load it only when the updated PDF is shown.
@@ -67,13 +67,28 @@ const CvPdfReviewer = ({ file, text, improvements }: CvPdfReviewerProps) => {
   const [docError, setDocError] = useState(false);
   const [download, setDownload] = useState<DownloadInfo | null>(null);
 
-  const highlightTargets = useMemo<HighlightImprovement[]>(
-    () =>
-      improvements.map((item, index) => ({ index, quote: item.quote, category: item.category })),
-    [improvements]
+  // Extend each quote to absorb a trailing same-line continuation the AI left
+  // out, so the original highlight and the rewrite cover the whole phrase (no
+  // dangling leftover word). Shared by both views to keep them consistent.
+  const resolvedImprovements = useMemo(
+    () => improvements.map((item) => ({ ...item, quote: extendQuoteTail(text, item.quote) })),
+    [improvements, text]
   );
 
-  const updated = useMemo(() => buildUpdatedResume(text, improvements), [text, improvements]);
+  const highlightTargets = useMemo<HighlightImprovement[]>(
+    () =>
+      resolvedImprovements.map((item, index) => ({
+        index,
+        quote: item.quote,
+        category: item.category,
+      })),
+    [resolvedImprovements]
+  );
+
+  const updated = useMemo(
+    () => buildUpdatedResume(text, resolvedImprovements),
+    [text, resolvedImprovements]
+  );
 
   // Measure the document area so PDF pages render at the right width.
   useLayoutEffect(() => {

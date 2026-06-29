@@ -3,6 +3,7 @@ import { Document as PdfViewer, Page as PdfViewerPage } from 'react-pdf';
 import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 import { Loader2 } from 'lucide-react';
 import '../lib/pdfWorker'; // ensures the pdf.js worker is configured
+import '../lib/pdfFonts'; // registers the Carlito (Calibri-compatible) font
 import type { ResumeSegment } from '../lib/buildUpdatedResume';
 
 export interface DownloadInfo {
@@ -27,19 +28,21 @@ const docStyles = StyleSheet.create({
   page: {
     paddingVertical: 44,
     paddingHorizontal: 52,
-    fontFamily: 'Helvetica',
+    fontFamily: 'Carlito',
     fontSize: 10,
     lineHeight: 1.4,
     color: '#1e293b',
   },
   name: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Carlito',
+    fontWeight: 'bold',
     fontSize: 18,
     color: '#0f172a',
     marginBottom: 1,
   },
   heading: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'Carlito',
+    fontWeight: 'bold',
     fontSize: 11.5,
     color: '#0f172a',
     textTransform: 'uppercase',
@@ -51,6 +54,14 @@ const docStyles = StyleSheet.create({
     borderBottomColor: '#cbd5e1',
   },
   para: {
+    marginBottom: 5,
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  meta: {
+    fontStyle: 'italic',
+    color: '#475569',
     marginBottom: 5,
   },
   bulletRow: {
@@ -142,6 +153,38 @@ function renderRuns(runs: Run[]) {
       <Text key={i}>{run.text}</Text>
     )
   );
+}
+
+// A "Label: value" line (résumé skill rows like "Frontend Core: React, …").
+const LABEL_RE = /^([^:\n]{1,40}:)(.*)$/s;
+// A date / location meta line under a job title, e.g. "May 2022 - Present | Remote".
+const META_RE = /\b((19|20)\d{2}|present)\b/i;
+
+function isMetaLine(text: string): boolean {
+  const trimmed = text.trim();
+  return trimmed.length <= 60 && META_RE.test(trimmed);
+}
+
+/**
+ * Render a paragraph, bolding the leading "Label:" prefix the way the original
+ * résumé does for skill rows. Only the first run is inspected (the label always
+ * leads the line) and change runs are left untouched.
+ */
+function renderRunsWithLabel(runs: Run[]) {
+  const first = runs[0];
+  if (first && !first.change) {
+    const match = LABEL_RE.exec(first.text);
+    if (match) {
+      const rest: Run[] = [{ text: match[2] }, ...runs.slice(1)];
+      return [
+        <Text key="label" style={docStyles.bold}>
+          {match[1]}
+        </Text>,
+        ...renderRuns(rest),
+      ];
+    }
+  }
+  return renderRuns(runs);
 }
 
 interface Block {
@@ -242,9 +285,28 @@ function buildDocument(segments: ResumeSegment[]) {
                 <Text style={docStyles.bulletText}>{renderRuns(block.runs)}</Text>
               </View>
             );
+
+          // Paragraph — match the original résumé's emphasis: italic date/meta
+          // lines, bold job titles (the line directly above a date line), and
+          // bold "Label:" prefixes on skill rows.
+          const text = block.runs.map((run) => run.text).join('');
+          if (isMetaLine(text))
+            return (
+              <Text key={i} style={docStyles.meta}>
+                {renderRuns(block.runs)}
+              </Text>
+            );
+          const next = blocks[i + 1];
+          const isTitle = next?.kind === 'para' && isMetaLine(next.runs.map((r) => r.text).join(''));
+          if (isTitle)
+            return (
+              <Text key={i} style={[docStyles.para, docStyles.bold]}>
+                {renderRuns(block.runs)}
+              </Text>
+            );
           return (
             <Text key={i} style={docStyles.para}>
-              {renderRuns(block.runs)}
+              {renderRunsWithLabel(block.runs)}
             </Text>
           );
         })}
