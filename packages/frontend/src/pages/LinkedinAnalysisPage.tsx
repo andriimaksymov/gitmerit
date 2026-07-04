@@ -3,7 +3,7 @@ import { useFileAnalysis } from '@/features/analysis/hooks/useFileAnalysis';
 import { usePendingFile } from '@/features/analysis/hooks/usePendingFile';
 import { AnalysisError, AnalysisPending, ReuploadPrompt } from '@/components/shared/AnalysisStatus';
 import { ShareReportBar } from '@/components/shared/ShareReportBar';
-import type { LinkedinProfileAssessment } from '@portfolio/shared';
+import type { LinkedinProfileAssessment } from '@gitmerit/shared';
 
 /** API response: the assessment plus the persisted report id (when enabled). */
 type LinkedinAnalysisResponse = LinkedinProfileAssessment & {

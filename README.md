@@ -1,13 +1,13 @@
-# DevScore
+# GitMerit
 
 > Turn your GitHub, LinkedIn, and résumé into a hiring-ready score with evidence-backed fixes.
 
-[![CI](https://github.com/andriimaksymov/portfolio-score/actions/workflows/ci.yml/badge.svg)](https://github.com/andriimaksymov/portfolio-score/actions/workflows/ci.yml)
+[![CI](https://github.com/andriimaksymov/gitmerit/actions/workflows/ci.yml/badge.svg)](https://github.com/andriimaksymov/gitmerit/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen)
 ![pnpm](https://img.shields.io/badge/pnpm-%3E%3D9-orange)
 
-DevScore is a full-stack developer profile intelligence platform. It analyzes GitHub activity, LinkedIn positioning, and resume/CV PDFs, then turns those inputs into scores, summaries, missing keywords, and practical improvement roadmaps.
+GitMerit is a full-stack developer profile intelligence platform. It analyzes GitHub activity, LinkedIn positioning, and resume/CV PDFs, then turns those inputs into scores, summaries, missing keywords, and practical improvement roadmaps.
 
 <!-- TODO: add live demo link and 2–3 screenshots/GIF here:
      1. Landing page
@@ -25,7 +25,7 @@ DevScore is a full-stack developer profile intelligence platform. It analyzes Gi
 ## Architecture
 
 ```text
-portfolio-score/
+gitmerit/
 ├── packages/
 │   ├── frontend/          # React 19, Vite, Tailwind CSS v4, TanStack Query
 │   ├── backend/           # NestJS 11 API: scoring, AI, GitHub, LinkedIn, CV modules
@@ -90,8 +90,8 @@ pnpm check
 ### Installation
 
 ```bash
-git clone https://github.com/andriimaksymov/portfolio-score.git
-cd portfolio-score
+git clone https://github.com/andriimaksymov/gitmerit.git
+cd gitmerit
 pnpm install
 ```
 

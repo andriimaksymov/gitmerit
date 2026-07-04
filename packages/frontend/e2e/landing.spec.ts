@@ -6,7 +6,7 @@ test.describe('Landing Page', () => {
   });
 
   test('has correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(/DevScore/);
+    await expect(page).toHaveTitle(/GitMerit/);
   });
 
   test('displays main headline', async ({ page }) => {

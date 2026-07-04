@@ -1,6 +1,6 @@
-# DevScore Backend
+# GitMerit Backend
 
-The DevScore backend is a NestJS API that powers developer profile analysis. It fetches or accepts source data, computes deterministic scores, asks AI providers for structured recommendations, and returns report-ready JSON to the React frontend.
+The GitMerit backend is a NestJS API that powers developer profile analysis. It fetches or accepts source data, computes deterministic scores, asks AI providers for structured recommendations, and returns report-ready JSON to the React frontend.
 
 ## Responsibilities
 
@@ -103,7 +103,7 @@ file: linkedin-profile.pdf
 ```
 
 Upload the PDF exported from LinkedIn (Profile → More → Save to PDF). Returns a
-section-by-section `LinkedinProfileAssessment` (see `@portfolio/shared`).
+section-by-section `LinkedinProfileAssessment` (see `@gitmerit/shared`).
 
 ### CV Upload
 

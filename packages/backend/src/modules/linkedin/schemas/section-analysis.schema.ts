@@ -1,5 +1,5 @@
 import { z } from 'zod/v3';
-import type { LinkedinSectionAnalysis } from '@portfolio/shared';
+import type { LinkedinSectionAnalysis } from '@gitmerit/shared';
 
 /**
  * Contract the AI must return for a single section. Uses zod/v3 for

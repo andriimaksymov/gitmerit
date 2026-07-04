@@ -6,7 +6,7 @@ import CvAnalysisDashboard from '@/features/analysis/components/CvAnalysisDashbo
 import LinkedInAssessmentDashboard from '@/features/analysis/components/LinkedInAssessmentDashboard';
 import { AnalysisError, AnalysisPending } from '@/components/shared/AnalysisStatus';
 import type { AnalysisResult, CvUploadResponse } from '@/features/analysis/types/analysis.types';
-import type { LinkedinProfileAssessment } from '@portfolio/shared';
+import type { LinkedinProfileAssessment } from '@gitmerit/shared';
 
 /**
  * Read-only view of a persisted analysis: /report/:id. Renders the same

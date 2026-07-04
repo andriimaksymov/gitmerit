@@ -1,6 +1,6 @@
-# DevScore Frontend
+# GitMerit Frontend
 
-The DevScore frontend is a React application for launching developer profile analyses and rendering report dashboards for GitHub, LinkedIn, and resume/CV inputs.
+The GitMerit frontend is a React application for launching developer profile analyses and rendering report dashboards for GitHub, LinkedIn, and resume/CV inputs.
 
 It uses a white-theme SaaS interface with score rings, metric cards, roadmap panels, keyword chips, and responsive two-column report layouts.
 

@@ -17,7 +17,7 @@ describe('AppController', () => {
   describe('root', () => {
     it('should return API status metadata', () => {
       expect(appController.getHello()).toEqual({
-        message: 'Portfolio Analyzer API',
+        message: 'GitMerit API',
         status: 'running',
       });
     });

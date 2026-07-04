@@ -1,6 +1,6 @@
 # Architecture
 
-DevScore is a pnpm workspace with three packages:
+GitMerit is a pnpm workspace with three packages:
 
 - `packages/frontend`: React application for input flows and report dashboards.
 - `packages/backend`: NestJS API for data ingestion, scoring, AI prompts, and file processing.
@@ -53,7 +53,7 @@ packages/frontend/
 │   │   ├── api/           # Analysis API functions
 │   │   ├── components/    # GitHub, LinkedIn, CV dashboards
 │   │   ├── hooks/         # React Query mutation hooks
-│   │   └── types/         # Frontend report shapes (primitives re-exported from @portfolio/shared)
+│   │   └── types/         # Frontend report shapes (primitives re-exported from @gitmerit/shared)
 │   └── pages/             # Route-level screens
 └── e2e/                   # Playwright specs
 ```
@@ -79,7 +79,7 @@ packages/backend/src/modules/
 ├── ai/                    # AI domain analyzers + provider transport layer
 │   ├── providers/         # AiProviderClient: SDK lifecycle, fallback order, schema-repair retry
 │   ├── prompts/           # Prompt builders
-│   ├── schemas/           # Zod schemas (runtime validation); primitives conform to @portfolio/shared
+│   ├── schemas/           # Zod schemas (runtime validation); primitives conform to @gitmerit/shared
 │   └── interfaces/        # Response contracts
 ├── analysis/              # GitHub analysis orchestration endpoint
 ├── cv/                    # PDF upload and parsing
@@ -127,7 +127,7 @@ Different flows can prefer a different provider order, but all flows are designe
 
 ## Data Boundaries
 
-DevScore currently treats analysis results as request-scoped data. There is no database-backed history yet. That keeps local development simple and reduces privacy risk, but it also means historical reports and user accounts are future roadmap items.
+GitMerit treats analysis results as request-scoped data by default. When `DATABASE_URL` is configured, each analysis is additionally persisted as an immutable report snapshot (Postgres via Prisma), enabling the `/history` view and shareable `/report/:id` links. Without it, nothing is stored and those features are disabled — persistence is strictly best-effort and never blocks an analysis. User accounts remain a future roadmap item.
 
 ## Deployment Notes
 

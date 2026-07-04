@@ -1,6 +1,6 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import type { Prisma } from '@prisma/client';
-import type { AnalysisSource } from '@portfolio/shared';
+import type { AnalysisSource } from '@gitmerit/shared';
 import { PrismaService } from './prisma.service';
 
 export interface ReportSummary {

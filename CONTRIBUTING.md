@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving DevScore. This repository is a full-stack TypeScript workspace, so most changes should consider both the user-facing report experience and the backend data contract that powers it.
+Thanks for improving GitMerit. This repository is a full-stack TypeScript workspace, so most changes should consider both the user-facing report experience and the backend data contract that powers it.
 
 ## Local Setup
 

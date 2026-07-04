@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "0.1.0",
-  "description": "Backend API for Portfolio Analyzer",
+  "description": "Backend API for GitMerit",
   "author": "Andrii Maksymov",
   "private": true,
   "license": "MIT",
@@ -35,7 +35,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/throttler": "^6.5.0",
-    "@portfolio/shared": "workspace:*",
+    "@gitmerit/shared": "workspace:*",
     "@prisma/client": "^6",
     "axios": "^1.6.5",
     "class-transformer": "^0.5.1",

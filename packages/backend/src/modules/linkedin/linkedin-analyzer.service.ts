@@ -3,7 +3,7 @@ import type {
   LinkedinProfileAssessment,
   LinkedinSectionAnalysis,
   LinkedinSectionResult,
-} from '@portfolio/shared';
+} from '@gitmerit/shared';
 import { AiProviderClient } from '../ai/providers/ai-provider.client';
 import { SECTIONS, SectionDef } from './sections.config';
 import { sectionAnalysisSchema } from './schemas/section-analysis.schema';

@@ -1,5 +1,5 @@
 import { z } from 'zod/v3';
-import type * as Shared from '@portfolio/shared';
+import type * as Shared from '@gitmerit/shared';
 
 export const analysisSourceSchema = z.enum(['github', 'linkedin', 'cv']);
 export const providerNameSchema = z.enum([
@@ -129,7 +129,7 @@ export type {
   QualitySignal,
   NextAction,
   EvidenceCard,
-} from '@portfolio/shared';
+} from '@gitmerit/shared';
 
 // Response shapes remain backend-owned (inferred from the Zod schemas).
 export type GithubAiResponse = z.infer<typeof githubAiResponseSchema>;

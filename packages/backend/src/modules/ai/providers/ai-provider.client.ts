@@ -185,7 +185,7 @@ Validation issues to fix: ${validationMessage}`,
           'HTTP-Referer':
             this.configService.get<string>('frontendUrl') ??
             'http://localhost:5173',
-          'X-Title': 'Portfolio Analyzer',
+          'X-Title': 'GitMerit',
         },
       });
       this.logger.log(

@@ -9,7 +9,7 @@ describe('Navbar Component', () => {
         <Navbar />
       </MemoryRouter>
     );
-    expect(screen.getByText(/DevScore/i)).toBeInTheDocument();
+    expect(screen.getByText(/GitMerit/i)).toBeInTheDocument();
   });
 
   it('renders navigation links', () => {

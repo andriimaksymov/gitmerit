@@ -1,8 +1,8 @@
 {
-  "name": "portfolio-analyzer",
+  "name": "gitmerit",
   "version": "0.1.0",
   "private": true,
-  "description": "A full-stack application for analyzing developer portfolios with GitHub integration",
+  "description": "GitMerit — scores developer GitHub profiles, resumes, and LinkedIn with AI-backed feedback",
   "scripts": {
     "dev": "pnpm --parallel --filter frontend --filter backend dev",
     "dev:frontend": "pnpm --filter frontend dev",

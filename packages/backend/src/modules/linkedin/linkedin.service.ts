@@ -3,7 +3,7 @@ import {
   Logger,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import type { LinkedinProfileAssessment } from '@portfolio/shared';
+import type { LinkedinProfileAssessment } from '@gitmerit/shared';
 import { LinkedinAnalyzer } from './linkedin-analyzer.service';
 import { extractPdfTextWithLayout } from '../../common/pdf.util';
 

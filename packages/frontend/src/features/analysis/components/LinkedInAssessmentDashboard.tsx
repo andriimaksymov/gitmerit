@@ -5,7 +5,7 @@ import type {
   LinkedinProfileAssessment,
   LinkedinSectionResult,
   LinkedinSectionStatus,
-} from '@portfolio/shared';
+} from '@gitmerit/shared';
 
 const STATUS_STYLES: Record<LinkedinSectionStatus, { label: string; pill: string; ring: string }> =
   {

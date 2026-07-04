@@ -65,7 +65,7 @@ export const Hero = ({
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
-              DevScore reads your GitHub, LinkedIn, and resume, then returns a scored,
+              GitMerit reads your GitHub, LinkedIn, and resume, then returns a scored,
               evidence-backed read — with the specific moves that raise it.
             </p>
 

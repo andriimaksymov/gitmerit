@@ -11,7 +11,7 @@ const metrics = [
 const signals = ['12 repos', '4.2k commits', 'TypeScript · Go'];
 
 /**
- * A sample of DevScore's actual output, used as the hero artifact. Not a
+ * A sample of GitMerit's actual output, used as the hero artifact. Not a
  * screenshot — a real, animated readout so the hero shows the product instead
  * of describing it.
  */

@@ -21,11 +21,11 @@ export const Navbar = () => {
   return (
     <nav className="fixed inset-x-0 top-0 z-40 border-b border-slate-200/70 bg-canvas/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center px-4 sm:px-6 lg:px-8">
-        <Link to="/" className="group flex items-center gap-2.5" aria-label="DevScore home">
+        <Link to="/" className="group flex items-center gap-2.5" aria-label="GitMerit home">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-ink text-[13px] font-bold text-white transition-transform group-hover:-rotate-6">
             D
           </span>
-          <span className="font-display text-lg font-bold tracking-tight text-ink">DevScore</span>
+          <span className="font-display text-lg font-bold tracking-tight text-ink">GitMerit</span>
         </Link>
 
         <div className="ml-auto hidden items-center gap-1 md:flex">

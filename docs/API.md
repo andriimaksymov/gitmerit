@@ -14,7 +14,7 @@ http://localhost:3001/api
 GET /api/health
 ```
 
-Returns `{ "status": "ok" }`. The root `GET /api` returns application metadata (`{ "message": "Portfolio Analyzer API", "status": "running" }`).
+Returns `{ "status": "ok" }`. The root `GET /api` returns application metadata (`{ "message": "GitMerit API", "status": "running" }`).
 
 ## GitHub Analysis
 
@@ -101,7 +101,7 @@ Upload the PDF exported from LinkedIn (Profile → More → Save to PDF). The ba
 extracts the text, splits it into standard profile sections, and runs a
 section-by-section AI assessment anchored on the detected headline/target title.
 
-Response shape (`LinkedinProfileAssessment` from `@portfolio/shared`):
+Response shape (`LinkedinProfileAssessment` from `@gitmerit/shared`):
 
 ```json
 {

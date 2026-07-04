@@ -6,7 +6,7 @@ export type {
   EvidenceCard,
   QualitySignal,
   NextAction,
-} from '@portfolio/shared';
+} from '@gitmerit/shared';
 
 import type {
   AnalysisMetadata,
@@ -14,7 +14,7 @@ import type {
   EvidenceCard,
   QualitySignal,
   NextAction,
-} from '@portfolio/shared';
+} from '@gitmerit/shared';
 
 export interface AiInsights {
   summary: string;

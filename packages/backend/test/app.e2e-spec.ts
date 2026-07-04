@@ -26,7 +26,7 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/api')
       .expect(200)
-      .expect({ message: 'Portfolio Analyzer API', status: 'running' });
+      .expect({ message: 'GitMerit API', status: 'running' });
   });
 
   it('/api/health (GET) returns ok with a timestamp', async () => {
