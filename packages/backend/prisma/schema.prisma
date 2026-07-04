@@ -12,7 +12,7 @@ datasource db {
 /// prompt logic changes later.
 model Report {
   id           String   @id @default(cuid())
-  /// 'github' | 'linkedin' | 'cv' — mirrors AnalysisSource in @portfolio/shared.
+  /// 'github' | 'linkedin' | 'cv' — mirrors AnalysisSource in @gitmerit/shared.
   source       String
   /// Human-readable subject: GitHub username or uploaded file name.
   subject      String

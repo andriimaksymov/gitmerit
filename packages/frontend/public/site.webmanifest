@@ -1,6 +1,6 @@
 {
-  "name": "DevScore",
-  "short_name": "DevScore",
+  "name": "GitMerit",
+  "short_name": "GitMerit",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -15,7 +15,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#615fff",
   "background_color": "#615fff",
   "display": "standalone"
 }
